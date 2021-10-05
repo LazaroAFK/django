@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- CSS only -->
+    <title>Iniciar</title>
+</head>
+<body>
+{% load static %}
+<div class="w-screen h-screen bg-gray-50 bg-no-repeat bg-bottom" style="background-image: url('{% static 'dashboard/login_image.png' %}');">
+  <div class="w-screen h-4/6 flex flex-col space-y-4 items-center pt-20">
+    {% if existe_usuario %}
+    <form name="contrasena" class="w-96 rounded-lg bg-white shadow-2xl flex flex-col p-10 space-y-5"
+      action="{% url 'password' %}" method="post">
+      <div class="flex flex-col text-xl font-medium">¡Hola, {{usuario}}!</div>
+      <div class="flex flex-col">
+        <input name="usuario" class="hidden" value="{{usuario}}"/>
+        <label class="flex-none mb-2">Contraseña</label>
+        <input name="contrasena" class="flex-none h-10 rounded-md border-2 border-gray-200 bg-white px-2" type="password" />
+      </div>
+      <input type="submit" class="cursor-pointer select-none flex-none h-10 rounded-md bg-yellow-400 hover:bg-yellow-500 pt-0.5 text-center font-medium" value="Autentificar"/>
+      {% csrf_token %}
+    </form>
+    {% else %}
+    <form name="usuario" class="w-96 rounded-lg bg-white shadow-2xl flex flex-col p-10 space-y-5"
+      action="{% url 'login' %}" method="post">
+      <div class="flex flex-col text-xl font-medium">Iniciar sessión</div>
+      <div class="flex flex-col">
+        <label class="flex-none mb-2">Usuario</label>
+        <input name="usuario" class="flex-none h-10 rounded-md border-2 border-gray-200 bg-white px-2" />
+      </div>
+      <input type="submit" class="cursor-pointer select-none flex-none h-10 rounded-md bg-yellow-400 hover:bg-yellow-500 pt-0.5 text-center font-medium" value="Verificar"/>
+      {% csrf_token %}
+    </form>
+    {% endif %}
+    {% if error %}
+    <div class="w-96 rounded-lg bg-red-200 border-2 border-red-300 shadow-2xl p-4 flex font-medium text-red-800">
+      <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 icon icon-tabler icon-tabler-alert-octagon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M8.7 3h6.6c.3 0 .5 .1 .7 .3l4.7 4.7c.2 .2 .3 .4 .3 .7v6.6c0 .3 -.1 .5 -.3 .7l-4.7 4.7c-.2 .2 -.4 .3 -.7 .3h-6.6c-.3 0 -.5 -.1 -.7 -.3l-4.7 -4.7c-.2 -.2 -.3 -.4 -.3 -.7v-6.6c0 -.3 .1 -.5 .3 -.7l4.7 -4.7c.2 -.2 .4 -.3 .7 -.3z"></path>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      {{error}}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+</body>
+</html>
