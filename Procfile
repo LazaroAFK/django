@@ -1,1 +1,1 @@
-web: gunicorn django_tasklist.wsgi
+web: gunicorn primera_app.wsgi --log-file -
